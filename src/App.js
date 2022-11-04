@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Main from './Lyouts/Main';
@@ -21,7 +21,6 @@ function App() {
       children:[
         {
           path:'/',
-          loader:()=>fetch('products.json'),
           element:<Shop></Shop>
         },
         {

@@ -11,7 +11,7 @@ const Order = () => {
     const [card, setCard] = useState(previousCart);
 
     const removeItemHandela=(id)=>{
-        const remainingCart = card.filter(product => product.id !== id);
+        const remainingCart = card.filter(product => product._id !== id);
         setCard(remainingCart);
         removeFromDb(id)
     }
@@ -24,7 +24,7 @@ const Order = () => {
         {/* all single product */}
             <div className="review-container">
                 {
-                    card.map(productItem => <ReviewItems key={productItem.id} productItem={productItem} removeItemHandela={removeItemHandela}></ReviewItems>)
+                    card.map(productItem => <ReviewItems key={productItem._id} productItem={productItem} removeItemHandela={removeItemHandela}></ReviewItems>)
                 }
                 {
                     card.length === 0 && <h2>No card found please back to <Link to='/'>Shop page</Link></h2>

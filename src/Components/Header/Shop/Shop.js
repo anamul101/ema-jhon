@@ -6,17 +6,39 @@ import { addToDb, deleteShoppingCart, getStoredCart, removeFromDb } from '../../
 
 import Card from '../../Card/Card';
 import SingleProduct from '../../SingleProduct/SingleProduct';
-import './Shop.css'
+import './Shop.css';
+ /*
+ count : loader data count
+ pare page : 10;
+ sizeing: count/parePage
+ currentPage: 
+ */
 const Shop = () => {
-    const products= useLoaderData();
+    // const {products,count}= useLoaderData();
+    const [products, setProducts] = useState([]);
+    const [count, setCount] = useState(0)
     const [card , setCard] = useState([]);
+    const [page, setPage] = useState(0);
+    const [size, setSize] = useState(10);
+
+    useEffect(()=>{
+        fetch(`http://localhost:5000/products?page=${page}&size=${size}`)
+            .then(res=>res.json())
+            .then(data=>{
+                setCount(data.count);
+                setProducts(data.products);
+            })
+    },[page,size])
+
+    const pages = Math.ceil(count/size);
+    
     
 
     useEffect(()=>{
        const shopingCart = getStoredCart();
        const saveCard = [];
        for(const id in shopingCart){
-            const addProduct = products.find(product=>product.id === id);
+            const addProduct = products.find(product=>product._id === id);
             // console.log(addProduct);
             if(addProduct){
                 const quantity = shopingCart[id];
@@ -30,18 +52,18 @@ const Shop = () => {
     const evenHandelar = (product) =>{
         // console.log(product)
         let newCard = []
-        const existis = card.find(singleProduct => singleProduct.id === product.id);
+        const existis = card.find(singleProduct => singleProduct._id === product._id);
         if(!existis){
             product.quantity = 1;
             newCard = [...card, product]
         }else{
-            const rest = card.filter(singleProduct=> singleProduct.id !== product.id);
+            const rest = card.filter(singleProduct=> singleProduct._id !== product._id);
             existis.quantity= existis.quantity+1;
             newCard=[...rest,existis]
         }
         // const newCard = [...card, product];
         setCard(newCard)
-        addToDb(product.id)
+        addToDb(product._id)
     }
    const clearCart = ()=>{
         setCard([]);
@@ -52,7 +74,7 @@ const Shop = () => {
             {/* all single product */}
             <div className="products-container">
                 {
-                    products.map(product=><SingleProduct key={product.id} product={product} evenHandelar={evenHandelar}></SingleProduct>)
+                    products.map(product=><SingleProduct key={product._id} product={product} evenHandelar={evenHandelar}></SingleProduct>)
                 }
             </div>
 
@@ -63,6 +85,24 @@ const Shop = () => {
                         <button className='btn-clear'>Review Order <FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon></button>
                     </Link>
                 </Card>
+            </div>
+            <div className="paigination">
+                <p className='current-page'>Curent page selected: {page} Products Size: {size}</p>
+                {
+                    [...Array(pages).keys()].map(number=><button 
+                    key={number}
+                    onClick={()=>setPage(number)}
+                    className={page === number && 'selected'}
+                    >
+                        {number}
+                    </button>)
+                }
+                <select onChange={(event)=>setSize(event.target.value)}>
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
             </div>
         </div>
     );

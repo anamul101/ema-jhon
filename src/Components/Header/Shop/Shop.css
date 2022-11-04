@@ -16,3 +16,19 @@
 .link-btn{
     text-decoration: none;
 }
+.paigination{
+    margin-left: 300px;
+    margin-bottom: 50px;
+    
+}
+.paigination button{
+    margin-right: 10px;
+    padding: 10px;
+}
+.paigination .selected{
+    background-color: orange;
+    border: olive;
+    font-weight: 400px;
+    color: white;
+    padding: 10px;
+}
