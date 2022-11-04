@@ -1,0 +1,28 @@
+.card{
+    position: sticky;
+    top:0;
+    padding: 15px 30px;
+}
+.btn-clear{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 232px;
+    height: 48px;
+    background: #FF3030;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 20px;
+    letter-spacing: 0.005em;
+    color: #FFFFFF;
+    border: none;
+    margin-top: 5PX;
+}
+.btn-clear:hover{
+    background: #d01e1e;
+    cursor: pointer;
+}
+.btn-p{
+    margin-right: 5px;
+}

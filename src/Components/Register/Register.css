@@ -1,0 +1,25 @@
+.error-text{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    letter-spacing: 0.0025em;
+    color: rgb(224, 58, 58);
+    text-align: center;
+    margin-top: 10px;
+}
+.Google-btn{
+    display: block;
+    width: 415px;
+    height: 55px;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 20px;
+    letter-spacing: 0.005em;
+    color: #2A414F;
+    border: 1px solid slategray;
+    margin-top: 10px;
+    margin: auto;
+    cursor: pointer;
+    border-radius: 8px;
+}
