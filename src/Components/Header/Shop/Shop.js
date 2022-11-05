@@ -37,17 +37,28 @@ const Shop = () => {
     useEffect(()=>{
        const shopingCart = getStoredCart();
        const saveCard = [];
-       for(const id in shopingCart){
-            const addProduct = products.find(product=>product._id === id);
-            // console.log(addProduct);
-            if(addProduct){
-                const quantity = shopingCart[id];
-                addProduct.quantity = quantity;
-                // console.log(addProduct)
-                saveCard.push(addProduct);
-            }
-       }
-       setCard(saveCard);
+       const ids = Object.keys(shopingCart);
+       fetch('http://localhost:5000/productsByIds',{
+        method:'POST',
+        headers:{
+            "content-type" : "application/json"
+        },
+        body: JSON.stringify(ids)
+       })
+       .then(res=>res.json())
+       .then(data=>{
+        console.log(data);
+            for(const id in shopingCart){
+                const addProduct = data.find(product=>product._id === id);
+                if(addProduct){
+                    const quantity = shopingCart[id];
+                    addProduct.quantity = quantity;
+                    saveCard.push(addProduct);
+                }
+        }
+        setCard(saveCard);
+       })
+       
     },[products])
     const evenHandelar = (product) =>{
         // console.log(product)
@@ -87,17 +98,17 @@ const Shop = () => {
                 </Card>
             </div>
             <div className="paigination">
-                <p className='current-page'>Curent page selected: {page} Products Size: {size}</p>
+                <p className='current-page'>Curent page selected: <span>{page}</span> Products Size: <span>{size}</span></p>
                 {
                     [...Array(pages).keys()].map(number=><button 
                     key={number}
                     onClick={()=>setPage(number)}
                     className={page === number && 'selected'}
                     >
-                        {number}
+                        {number + 1}
                     </button>)
                 }
-                <select onChange={(event)=>setSize(event.target.value)}>
+                <select className='selected' onChange={(event)=>setSize(event.target.value)}>
                     <option value="5">5</option>
                     <option value="10" selected>10</option>
                     <option value="15">15</option>

@@ -17,18 +17,30 @@
     text-decoration: none;
 }
 .paigination{
-    margin-left: 300px;
+    margin: auto;
     margin-bottom: 50px;
     
 }
 .paigination button{
     margin-right: 10px;
     padding: 10px;
+    border:1px solid olive;
+    font-weight: bold;
 }
 .paigination .selected{
     background-color: orange;
-    border: olive;
+    border:1px solid olive;
     font-weight: 400px;
     color: white;
     padding: 10px;
+}
+.current-page{
+    margin-bottom: 10px;
+    font-weight: bold;
+    
+}
+.current-page span{
+    color: orange;
+    font-weight: bold;
+
 }
